@@ -424,7 +424,7 @@ webauthnRouter.post("/webauthn_finish_login", async (c) => {
 })
 
 // POST /api/authn/webauthn_begin_registration (需已登录)
-webauthnRouter.post("/webauthn_begin_registration", async (c) => {
+webauthnRouter.on(["GET", "POST"], "/webauthn_begin_registration", async (c) => {
   const db = await getDb(c.env)
   if (!getBoolSetting(db, "webauthn_login_enabled")) {
     return c.json({ code: 403, message: "WebAuthn is not enabled", data: null }, 403)
